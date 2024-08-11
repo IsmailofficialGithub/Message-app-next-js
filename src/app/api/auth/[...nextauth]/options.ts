@@ -13,8 +13,9 @@ export const authOptions: NextAuthOptions = {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials: any): Promise<any> {
-        await dbConnect;
+      
+      async authorize(credentials: any,req): Promise<any> {
+        await dbConnect; 
         try {
           const user = await UserModel.findOne({
             $or: [{ email: credentials.identifier }, { username: credentials.identifier }],
@@ -28,6 +29,7 @@ export const authOptions: NextAuthOptions = {
           const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
           if (isPasswordCorrect) {
             return user;
+            
           } else {
             throw new Error("Incorrect Password");
           }
@@ -38,6 +40,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
+    
     async jwt({ token, user }) {
       if (user) {
         token._id = user._id?.toString();
@@ -58,10 +61,10 @@ export const authOptions: NextAuthOptions = {
     },
   },
   pages: {
-    signIn: "/auth/signin",
+    signIn: "/sign-in",
   },
   session: {
     strategy: "jwt",
   },
-  secret: process.env.NEXT_AUTH_SECRETE_SIGNIN,
+  secret: process.env.NEXT_AUTH_SECRETE_SIGNIN
 };

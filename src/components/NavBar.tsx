@@ -3,11 +3,17 @@ import React from 'react'
 import Link from 'next/link'
 import { useSession ,signOut} from 'next-auth/react';
 import {User} from 'next-auth' 
-import { Button } from '@react-email/components';
+import {redirect} from 'next/navigation'
+import { Button } from './ui/button';
 
 
 const NavBar = () => {
 
+  const handleLogout=async()=>{
+   await signOut();
+   redirect('/sign-in')
+
+  }
   const {data:session} =useSession()
 
   const user:User = session?.user as User;
@@ -20,7 +26,7 @@ const NavBar = () => {
           session?(
            <>
             <span className='mr-4'>Wellcome , {user?.username || user?.email}</span>
-            <Button className='w-full md:w-auto' onClick={()=>{signOut()}}>Log-Out</Button>
+            <Button className='w-full md:w-auto cursor-pointer' onClick={handleLogout}>Log-Out</Button>
            </>
           ):(
             <Link href="/sign-in">

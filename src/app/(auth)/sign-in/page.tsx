@@ -2,14 +2,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import axios, { AxiosError } from "axios";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useDebounceCallback } from "usehooks-ts";
+import {  useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
-import { signUpSchema } from "@/schemas/signUpSchema";
-import { ApiResponse } from "@/types/apiResponce";
 import {
   Form,
   FormControl,
@@ -42,10 +38,10 @@ const page = () => {
   // on submit
   const onSubmit = async (data: z.infer<typeof signInSchema>) => {
       setIsSubmitting(true)
-     const result= await signIn('crendentials',{
+     const result= await signIn('Credentials',{
+        redirect:false,
         identifier:data.identifier,
         password:data.password,
-        redirect:false
       })
       if(result?.error){
         toast({
@@ -54,7 +50,7 @@ const page = () => {
           variant:"destructive",
         })
       }
-      if(result?.url){
+      else{
         router.replace('/dashboard')
       }
       setIsSubmitting(false)
@@ -105,7 +101,7 @@ const page = () => {
                 <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
                  Please Wait
               </>
-               : "SignUp"}
+               : "SignIn"}
             </Button>
           </form>
         </Form>
