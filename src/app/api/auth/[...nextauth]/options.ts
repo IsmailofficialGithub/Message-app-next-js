@@ -18,16 +18,17 @@ export const authOptions: NextAuthOptions = {
         await dbConnect; 
         try {
           const user = await UserModel.findOne({
-            $or: [{ email: credentials.identifier }, { username: credentials.identifier }],
+            $or: [{ email: credentials.identifier }, { userName: credentials.identifier }],
           });
           if (!user) {
-            throw new Error("No user found with this email");
+            throw new Error("No user found with this email/userName");
           }
           if (!user.isVerified) {
             throw new Error("Please verify your account before login");
           }
           const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
           if (isPasswordCorrect) {
+            console.log(user)
             return user;
             
           } else {
@@ -46,7 +47,7 @@ export const authOptions: NextAuthOptions = {
         token._id = user._id?.toString();
         token.isVerified = user.isVerified;
         token.iAcceptingMessage = user.isAcceptingMessage;
-        token.username = user.username;
+        token.userName = user.username;
       }
       return token;
     },
