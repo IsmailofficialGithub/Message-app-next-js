@@ -67,7 +67,7 @@
     @apply bg-background text-foreground;
   }
 }
-body {
+/* body {
   background-color: var(--background);
   color: var(--text);
 }
@@ -80,4 +80,4 @@ body {
 [data-theme="light"] {
   --background: #fff !important;
   --text: #000 !important;
-}
+} */

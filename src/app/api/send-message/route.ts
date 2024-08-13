@@ -6,9 +6,16 @@ import { Message } from "@/models/User";
 export async function POST(request: Request) {
   await dbConnect;
 
-  const { username, content } = await request.json();
+  const { userName, content } = await request.json();
+  console.log(userName)
   try {
-    const user = await UserModel.findOne({ username });
+    const user = await UserModel.findOne({
+     $or:[
+          {userName:userName},
+          {email:userName}
+     ]
+    });
+    console.log('user===>>>',user)
     if (!user) {
       return Response.json(
         {
@@ -19,13 +26,13 @@ export async function POST(request: Request) {
       );
     }
     // is user accepting messages
-    if (!user.isAcceptingMessage) {
+    if (!user?.isAcceptingMessage) {
       return Response.json(
         {
           success: false,
           message: "User is Not accepting the Messages",
         },
-        { status: 403 },
+        { status: 200 },
       );
     }
     const newMessage={content,createAt:new Date()};

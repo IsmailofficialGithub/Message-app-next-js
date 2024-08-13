@@ -14,6 +14,7 @@ import { User } from "next-auth";
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Skeleton } from "@/components/ui/skeleton"
 
 const Dashboard = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -21,7 +22,7 @@ const Dashboard = () => {
   const [isSwitchLoading, setIsSwitchLoading] = useState(false);
   const { toast } = useToast();
 
-  const handleDeleteMessage = (messageId: string) => {
+  const handleDeleteMessage = (messageId: any) => {
     setMessages(messages.filter((message) => message._id !== messageId));
   };
 
@@ -168,19 +169,33 @@ const Dashboard = () => {
           <RefreshCcw className="h-4 w-4" />
         )}
       </Button>
+      
       <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+
         {messages.length > 0 ? (
           messages.map((message, index) => (
+           <>
+           {isLoading?
+           (
+            <Skeleton className="h-[305px] w-[450px] rounded-xl bg-slate-200" />
+
+           ):
+           (
             <MessageCard
               message={message}
-              onMessageDelete={handleDeleteMessage}
+              onMessageDelete={()=>{handleDeleteMessage(message._id)}}
             />
+           )}
+            
+           </>
           ))
         ) : (
           <p>No messages to display.</p>
         )}
       </div>
+     
     </div>
+    
   );
 };
 
