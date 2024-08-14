@@ -18,22 +18,24 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Environment Variables
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+To get the project up and running locally, you need to configure several environment variables. Please follow these steps:
 
-## Deploy on Vercel
+1. **Create a `.env` File:**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   In the root directory of your project, create a file named `.env`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-"# Message-app-next-js" 
-"# Message-app-next-js" 
-"# Message-app-next-js" 
+2. **Add the Required Environment Variables:**
+
+   Open the `.env` file and add the following variables:
+
+   ```plaintext
+   DB_URL="your_database_url_here"
+   RESEND_API="your_resend_api_key_here"
+   NEXT_AUTH_SECRET="your_next_auth_secret_here"
+   OPEN_AI_API_KEY="your_openai_api_key_here"
