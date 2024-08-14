@@ -7,7 +7,6 @@ export async function POST(request: Request) {
   await dbConnect;
 
   const { userName, content } = await request.json();
-  console.log(userName)
   try {
     const user = await UserModel.findOne({
      $or:[
@@ -15,7 +14,6 @@ export async function POST(request: Request) {
           {email:userName}
      ]
     });
-    console.log('user===>>>',user)
     if (!user) {
       return Response.json(
         {

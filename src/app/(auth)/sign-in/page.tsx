@@ -59,7 +59,7 @@ const page = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screed bg-gray-100">
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md mt-5">
+      <div className="w-full max-w-md p-8 space-y-8 bg-slate-500 rounded-lg shadow-md mt-5">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
             Join Mystery Message
@@ -107,9 +107,9 @@ const page = () => {
         </Form>
             <div className="text-center mt-4">
               <p>
-                I Ready have a Account ? {''}
-                <Link href={'/sign-in'} className="text-blue-600 hover:text-blue-800">
-                  Sign In ?
+                I Don't have any Account {''}
+                <Link href={'/sign-up'} className="text-slate-50 hover:text-blue-800">
+                  Sign up ?
                 </Link>
               </p>
             </div>

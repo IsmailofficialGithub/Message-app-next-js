@@ -15,11 +15,13 @@ import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Skeleton } from "@/components/ui/skeleton"
+import { useRouter } from "next/navigation";
 
 const Dashboard = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSwitchLoading, setIsSwitchLoading] = useState(false);
+  const router=useRouter()
   const { toast } = useToast();
 
   const handleDeleteMessage = (messageId: any) => {
@@ -125,7 +127,10 @@ const Dashboard = () => {
   };
 
   if (!session || !session.user) {
-    return <div>Please Login .....</div>;
+    return <div className="text-center flex flex-col gap-7 items-center justify-center text-4xl font-bold">
+      <div>Please Login .....</div>
+    <Button onClick={()=>{router.replace('/sign-in')}}>Login </Button>
+      </div>;
   }
 
   return (
