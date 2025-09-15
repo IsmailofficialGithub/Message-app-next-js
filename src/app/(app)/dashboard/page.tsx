@@ -204,8 +204,8 @@ const Dashboard = () => {
       />
     ))
   ) : messages.length > 0 ? (
-    messages.map((message) => (
-      <div key={message._id} className="w-full max-w-md mx-auto">
+    messages.map((message,index) => (
+      <div key={index} className="w-full max-w-md mx-auto">
         <MessageCard
           message={message}
           onMessageDelete={() => handleDeleteMessage(message._id)}
