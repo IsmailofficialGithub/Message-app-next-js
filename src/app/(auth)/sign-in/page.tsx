@@ -20,7 +20,7 @@ import { Loader2 } from "lucide-react";
 import { signInSchema } from "@/schemas/signInSchema";
 import { signIn } from "next-auth/react";
 
-const page = () => {
+const Page = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
@@ -107,7 +107,7 @@ const page = () => {
         </Form>
             <div className="text-center mt-4">
               <p>
-                I Don't have any Account {''}
+                I Don`&apos;`t have any Account {''}
                 <Link href={'/sign-up'} className="text-slate-50 hover:text-blue-800">
                   Sign up ?
                 </Link>
@@ -118,4 +118,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

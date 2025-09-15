@@ -22,6 +22,7 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSwitchLoading, setIsSwitchLoading] = useState(false);
   const router=useRouter()
+  const [profileUrl, setProfileUrl] = useState("");
   const { toast } = useToast();
 
   const handleDeleteMessage = (messageId: any) => {
@@ -115,9 +116,12 @@ const Dashboard = () => {
   const username = session?.user?.email;
 
   // do more research
-  const baseUrl = `${window.location.protocol}//${window.location.host}`;
-  const profileUrl = `${baseUrl}/u/${username}`;
-
+  useEffect(() => {
+  if (typeof window !== "undefined" && username) {
+    const baseUrl = `${window.location.protocol}//${window.location.host}`;
+    setProfileUrl(`${baseUrl}/u/${username}`);
+  }
+}, [username]);
   const copyToClipboard = () => {
     navigator.clipboard.writeText(profileUrl);
     toast({

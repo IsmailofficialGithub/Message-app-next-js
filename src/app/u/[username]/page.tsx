@@ -133,6 +133,7 @@ const MessagePage = () => {
             <CardContent className="flex flex-col item-center justify-center gap-3">
               {messages.map((message, index) => (
                 <Button
+                key={index}
                   className="bg-transparent border border-solid rounded-lg text-black hover:text-white"
                   onClick={() => {
                     messageClick(message.content);

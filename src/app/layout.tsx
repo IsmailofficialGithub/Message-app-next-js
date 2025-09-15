@@ -17,19 +17,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <AuthProvider
-    attribute="class"
-      defaultTheme="system"
-      enableSystem
-      disableTransitionOnChange
+  <html lang="en">
+  <body className={inter.className}>
+    <AuthProvider>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
       >
-        <body className={inter.className}>
+        {children}
+        <Toaster />
+      </ThemeProvider>
+    </AuthProvider>
+  </body>
+</html>
 
-          <ThemeProvider>{children}</ThemeProvider>
-          <Toaster />
-        </body>
-      </AuthProvider>
-    </html>
   );
 }
