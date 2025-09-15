@@ -14,14 +14,14 @@ import { User } from "next-auth";
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Skeleton } from "@/components/ui/skeleton"
+import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
 
 const Dashboard = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSwitchLoading, setIsSwitchLoading] = useState(false);
-  const router=useRouter()
+  const router = useRouter();
   const [profileUrl, setProfileUrl] = useState("");
   const { toast } = useToast();
 
@@ -37,7 +37,7 @@ const Dashboard = () => {
 
   const { register, watch, setValue } = form;
   const acceptMessage: boolean = watch("acceptMessages");
-  
+
   const fetchAcceptMessage = useCallback(async () => {
     setIsSwitchLoading(true);
     try {
@@ -48,7 +48,9 @@ const Dashboard = () => {
       const axiosError = error as AxiosError<ApiResponse>;
       toast({
         title: "Error",
-        description: axiosError.response?.data.message || "Failed to fetch message Settings",
+        description:
+          axiosError.response?.data.message ||
+          "Failed to fetch message Settings",
         variant: "destructive",
       });
     } finally {
@@ -74,7 +76,8 @@ const Dashboard = () => {
         const axiosError = error as AxiosError<ApiResponse>;
         toast({
           title: "Error",
-          description: axiosError.response?.data.message || "Failed to fetch messages",
+          description:
+            axiosError.response?.data.message || "Failed to fetch messages",
           variant: "destructive",
         });
       } finally {
@@ -107,7 +110,9 @@ const Dashboard = () => {
       const axiosError = error as AxiosError<ApiResponse>;
       toast({
         title: "Error",
-        description: axiosError.response?.data.message || "Failed to fetch message Settings",
+        description:
+          axiosError.response?.data.message ||
+          "Failed to fetch message Settings",
         variant: "destructive",
       });
     }
@@ -117,11 +122,11 @@ const Dashboard = () => {
 
   // do more research
   useEffect(() => {
-  if (typeof window !== "undefined" && username) {
-    const baseUrl = `${window.location.protocol}//${window.location.host}`;
-    setProfileUrl(`${baseUrl}/u/${username}`);
-  }
-}, [username]);
+    if (typeof window !== "undefined" && username) {
+      const baseUrl = `${window.location.protocol}//${window.location.host}`;
+      setProfileUrl(`${baseUrl}/u/${username}`);
+    }
+  }, [username]);
   const copyToClipboard = () => {
     navigator.clipboard.writeText(profileUrl);
     toast({
@@ -131,14 +136,22 @@ const Dashboard = () => {
   };
 
   if (!session || !session.user) {
-    return <div className="text-center flex flex-col gap-7 items-center justify-center text-4xl font-bold">
-      <div>Please Login .....</div>
-    <Button onClick={()=>{router.replace('/sign-in')}}>Login </Button>
-      </div>;
+    return (
+      <div className="text-center flex flex-col gap-7 items-center justify-center text-4xl font-bold">
+        <div>Please Login .....</div>
+        <Button
+          onClick={() => {
+            router.replace("/sign-in");
+          }}
+        >
+          Login{" "}
+        </Button>
+      </div>
+    );
   }
 
   return (
-    <div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl">
+    <div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-white dark:bg-gray-900 rounded w-full max-w-6xl">
       <h1 className="text-4xl font-bold mb-4">User Dashboard</h1>
 
       <div className="mb-4">
@@ -161,7 +174,9 @@ const Dashboard = () => {
           onCheckedChange={handleSwitchChange}
           disabled={isSwitchLoading}
         />
-        <span className="ml-2">Accept Messages: {acceptMessage ? "On" : "Off"}</span>
+        <span className="ml-2">
+          Accept Messages: {acceptMessage ? "On" : "Off"}
+        </span>
       </div>
       <Separator />
 
@@ -171,40 +186,41 @@ const Dashboard = () => {
         onClick={(e) => {
           e.preventDefault();
           fetchMessages(true);
-        }}>
+        }}
+      >
         {isLoading ? (
           <Loader2 className="h-4 w-4 animate-spin" />
         ) : (
           <RefreshCcw className="h-4 w-4" />
         )}
       </Button>
-      
-      <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
 
-        {messages.length > 0 ? (
-          messages.map((message, index) => (
-           <>
-           {isLoading?
-           (
-            <Skeleton className="h-[305px] w-[450px] rounded-xl bg-slate-200" />
-
-           ):
-           (
-            <MessageCard
-              message={message}
-              onMessageDelete={()=>{handleDeleteMessage(message._id)}}
-            />
-           )}
-            
-           </>
-          ))
-        ) : (
-          <p>No messages to display.</p>
-        )}
+<div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  {isLoading ? (
+    Array.from({ length: 4 }).map((_, index) => (
+      <Skeleton
+        key={index}
+        className="h-[120px] w-full max-w-md mx-auto rounded-xl bg-slate-200"
+      />
+    ))
+  ) : messages.length > 0 ? (
+    messages.map((message) => (
+      <div key={message._id} className="w-full max-w-md mx-auto">
+        <MessageCard
+          message={message}
+          onMessageDelete={() => handleDeleteMessage(message._id)}
+        />
       </div>
-     
+    ))
+  ) : (
+    <p className="col-span-full text-center text-gray-500">
+      No messages to display.
+    </p>
+  )}
+</div>
+
+
     </div>
-    
   );
 };
 
